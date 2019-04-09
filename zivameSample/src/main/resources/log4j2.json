@@ -1,0 +1,117 @@
+{
+	"configuration": {
+		"status": "error",
+		"name": "PropertiesConfig",
+		"properties": {
+			"property": [
+				{
+					"name": "Directory",
+					"value": "/home/rajivranjan/Desktop/Rajiv/mnt/logs/backendLogs"
+				},
+				{
+					"name": "LogFileName",
+					"value": "application.log"
+				},
+				{
+					"name": "LogFileName1",
+					"value": "application_error.log"
+				}
+			]
+		},
+		"ThresholdFilter": {
+			"level": "debug"
+		},
+		"DynamicThresholdFilter": {
+			"key": "ctxLogLevel",
+			"onMatch": "ACCEPT",
+			"onMismatch": "NEUTRAL",
+			"KeyValuePair": [
+				{
+					"key": "fatal",
+					"value": "fatal"
+				},
+				{
+					"key": "error",
+					"value": "error"
+				},
+				{
+					"key": "warn",
+					"value": "warn"
+				},
+				{
+					"key": "info",
+					"value": "info"
+				},
+				{
+					"key": "debug",
+					"value": "debug"
+				},
+				{
+					"key": "trace",
+					"value": "trace"
+				}
+			]
+		},
+		"appenders": {
+			"Console": {
+				"name": "STDOUT",
+				"PatternLayout": {
+					"pattern": "%X{requestId} %d{yyyy-MM-dd HH:mm:ss} [%t] [%tid] %-5p %c{1}.%M:%L - %m%n"
+				}
+			},
+			"RollingFile": [
+				{"name": "File",
+				"fileName": "${Directory}/${sys:LogFileName}",
+				"filePattern": "${Directory}/${sys:LogFileName}-%d{MM-dd-yyyy}-%i.log",
+				"PatternLayout": {
+					"pattern": "%X{requestId} %d{yyyy-MM-dd HH:mm:ss} [%t] [%tid] %-5p %c{1}.%M:%L - %m%n"
+				},
+				"Policies": {
+					"SizeBasedTriggeringPolicy": {
+						"size": "20 MB"
+					}
+				},
+				"DefaultRolloverStrategy": {
+					"max": 5
+				}
+				},
+				{"name": "File1",
+				"fileName": "${Directory}/${sys:LogFileName1}",
+				"filePattern": "${Directory}/${sys:LogFileName1}-%d{MM-dd-yyyy}-%i.log",
+				"PatternLayout": {
+					"pattern": "%X{requestId} %d{yyyy-MM-dd HH:mm:ss} [%t] [%tid] %-5p %c{1}.%M:%L - %m%n"
+				},
+				"Policies": {
+					"SizeBasedTriggeringPolicy": {
+						"size": "20 MB"
+					}
+				},
+				"DefaultRolloverStrategy": {
+					"max": 5
+				}
+				}
+			]
+			},
+		"loggers": {
+			"root": {
+				"level": "info",
+				"AppenderRef": [
+					{
+						"ref": "File",
+						"level": "info"
+					},
+					{
+						"ref": "File1",
+						"level": "error"
+					}
+				]
+			},
+			"logger": [
+				{
+					"name": "com.zivame",
+					"level": "info"
+				}
+			]
+		}
+	}
+}
